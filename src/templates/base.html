@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang=en>
+	<head>
+		<title>{%block head_title%}Allcoin{% endblock head_title %}</title>
+		{% include 'snippets/css.html' %}
+		<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	</head>
+	<body>
+		{% include 'snippets/nav.html' %}
+		<div class='container'>
+			{% block content %}{% endblock content%}	
+		</div>	
+		{% include 'snippets/js.html' %}
+		{% include 'snippets/footer.html' %}
+	</body>
+</html>

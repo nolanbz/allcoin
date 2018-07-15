@@ -1,0 +1,44 @@
+{% extends "base.html"%}
+{% block head_title %}Home | {{ block.super }}{% endblock head_title %}
+{% block content %}
+
+<br>
+{% for obj in object_list %}
+	<div class="col-sm-8 offset-sm-2">
+		<div class="container">
+			<br>	
+			<h2><a href='{{ obj.slug }}' class='list_heading_link'>{{obj}}</a></h2>
+ 	 	 	<div class='list_heading mr-auto'>{{obj.owner|title}} ∙ {{obj.updated}}</div>
+ 	 	 	<div class='list_heading mr-auto'>{{ obj.readtime }} minute read</div>
+			<br>
+			{% if person.image %}
+				<a href='{{obj.get_absolute_url}}'><img class="img-fluid" src="{{ obj.image.url }}"></a>		
+			{% endif %}
+			<br>
+			<br>
+			<div>{{obj.content|linebreaks|truncatechars:400}}</div>			
+			<hr>
+		</div>
+	</div>		
+{% endfor %}
+<br>
+<div class="col-sm-8 offset-sm-2">
+	<div class="container">	
+		<div class="row">
+		  <div class="col-auto mr-auto">
+		  		{% if object_list.has_previous %}
+					<div class= "list_heading"><a class="btn btn-dark" href="?{{page_request_var}}={{ object_list.previous_page_number }}">Previous page</a></div>
+				{% endif %}
+		  </div>
+		  <div class="col-auto">
+		  		{% if object_list.has_next %}
+ 					<div class= "list_heading "><a class="btn btn-primary" href="?{{page_request_var}}={{ object_list.next_page_number }}">Next page</a></div>
+				{% endif %}	 
+		  </div>
+		</div>
+ 	</div>
+</div>
+<br>
+<br>
+
+{% endblock content %}

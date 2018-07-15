@@ -1,0 +1,35 @@
+{% extends "base.html"%}
+{% block head_title %}Login | {{ block.super }}{% endblock head_title %}
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="text-center" id="outPopUp">
+	{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+
+	{% if next %}
+		{% if user.is_authenticated %}
+			<p>Your account doesn't have access to this page. To proceed,
+			please login with an account that has access.</p>
+		{% else %}
+			<p>Please login to see this page.</p>
+		{% endif %}
+	{% endif %}
+	<h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+	<form class="form-login" method="post" action="{% url 'login' %}">
+		{% csrf_token %}		
+		{{ form.username|add_class:'form-control'|attr:"placeholder:Username"|attr:"id:username" }}
+		{{ form.password|add_class:'form-control'|attr:"placeholder:Password"|attr:"id:password" }}
+			<div class="checkbox mb-3">
+				<label>
+					<input type="checkbox" value="remember-me"> Remember me
+				</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Login</button>
+			<input type="hidden" name="next" value="{{ next }}">
+			<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+	</form>
+</div>
+
+{% endblock content %}

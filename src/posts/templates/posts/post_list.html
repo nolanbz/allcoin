@@ -1,0 +1,71 @@
+{% extends "base.html"%}
+{% block head_title %}Home | {{ block.super }}{% endblock head_title %}
+{% block content %}
+
+<br>
+	
+
+{% for object in object_list %}
+	<div class="col-sm-8 offset-sm-2">
+		<div class="container">
+			<br>	
+			{% if request.user.is_superuser %}				  	
+			  	<a href='{% url "posts:edit" object.slug %}' style="float:right;">Edit</a>
+			{% endif %}
+			<div class="box">
+				<div>
+					<img src="{{ object.logo }}">
+				</div>
+				<div class="detail_heading">
+					<h1>
+						<a href='{{ object.get_absolute_url }}' class='list_heading_link'>{{object}}</a>
+					</h1>
+				</div>
+				<pre class="tab"> </pre>
+				<div class="detail_ticker">
+					<h3>{{object.ticker}}</h3>
+				</div>
+			</div>
+ 	 		<div class="row justify-content-between">
+				<div class='list_heading col-auto'>{{object.owner|title}} ∙ {{object.updated}}</div>
+	 			<div class= "list_heading col-auto">{{ object.readtime }} minute read</div>
+			</div>
+			<br>				
+			<a href='{{object.get_absolute_url}}'><img class="img-fluid" src="{{ object.image_url|default_if_none:'#' }}"></a> 
+			<br>
+			<br>
+			<div>{{object.content|linebreaks|truncatechars:400}}</div>							
+			<hr>
+		</div>
+	</div>
+{% endfor %}
+
+<br>
+
+<div class="col-sm-8 offset-sm-2">
+	<div class="container">	
+
+		<div class="row">
+		  <div class="col-auto mr-auto">
+		  		{% if page_obj.has_previous %}
+					<div class= "list_heading"><a class="btn btn-dark" href="?page{{page_request_var}}={{ page_obj.previous_page_number }}">Previous page</a></div>
+				{% endif %}
+		  </div>
+		  <div class="col-auto">
+		  		{% if page_obj.has_next %}
+ 					<div class= "list_heading "><a class="btn btn-primary" href="?page{{page_request_var}}={{ page_obj.next_page_number }}">Next page</a></div>
+				{% endif %}	 
+		  </div>
+		</div>
+ 	</div>
+</div>
+
+<br>
+<br>
+
+
+
+
+
+
+{% endblock content %}

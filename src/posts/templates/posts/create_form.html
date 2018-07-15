@@ -1,0 +1,51 @@
+{% extends "base.html"%}
+{% block head_title %}New Post | {{ block.super }}{% endblock head_title %}
+{% block content %}
+{% load widget_tweaks %}
+
+{{ form.non_field_errors }}
+
+<div class="col-sm-8 offset-sm-2">
+		<div class="text-center" id="createForm">
+			<br>
+			<div class="col-sm-12 ">
+				<h1 class="h3 mb-3 font-weight-normal">Create</h1>
+				<hr>
+			</div>	
+			<br>			
+			<form class="form-create" method="POST" enctype='multipart/form-data'>
+				{% csrf_token %}
+				<p></p>
+				<div class="col-sm-5">
+					{{ form.name|add_class:'form-control'|attr:"placeholder:Name"|attr:"id:name" }}
+				</div>
+				<br>
+				<div class="col-sm-5">
+					{{ form.ticker|add_class:'form-control'|attr:"placeholder:Ticker"|attr:"id:ticker" }}
+				</div>
+				<br>
+				<div class="col-sm-5">
+					{{ form.logo|add_class:'form-control'|attr:"placeholder:Logo url"|attr:"id:logo" }}
+				</div>
+				<br>
+				<div class="col-sm-5">
+					{{ form.category|add_class:'form-control'|attr:"placeholder:Category"|attr:"id:category" }}
+				</div>
+				<br>				
+				<div class="col-sm-5">
+					{{ form.image|add_class:'form-control'|attr:"id:image" }}
+				</div>
+				<br>
+				<div class="col-sm-12 ">
+					{{ form.content|add_class:'form-control'|attr:"id:content" }}
+				</div>				
+				<br>
+				<div class="col-sm-12 ">
+					<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Create</button>
+				</div>
+				<input type="hidden" name="next" value="{{ next }}" />	
+			</form>
+		</div>
+</div>
+
+{% endblock content %}
